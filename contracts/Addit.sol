@@ -45,7 +45,7 @@ contract additToken is ERC20Interface, SafeMath {
     mapping(address => mapping(address => uint)) allowed;
 
     constructor () public {
-        symbol = "ADT";
+        symbol = "ADDIT";
         name = "Addit Token";
         decimals = 18;
     }

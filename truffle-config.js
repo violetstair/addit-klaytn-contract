@@ -1,8 +1,8 @@
 /**
  * truffle network variables
  */
-const FROM = '0x6acd10baa89aafc557eb7c185db8f6f325806859'
-const HOST = 'localhost'
+const FROM = '0x5ab18205b999099f2ebeb25aedef990675b668a3'
+const HOST = '54.95.238.82'
 const PORT = '8551'
 const NETWORK_ID = '1000'
 const GASLIMIT = 20000000
