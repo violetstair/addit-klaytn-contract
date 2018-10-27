@@ -44,8 +44,7 @@ contract additToken is ERC20Interface, SafeMath {
     mapping(address => uint) balances;
     mapping(address => mapping(address => uint)) allowed;
 
-
-    function additToken() public {
+    constructor () public {
         symbol = "ADT";
         name = "Addit Token";
         decimals = 18;
@@ -62,13 +61,13 @@ contract additToken is ERC20Interface, SafeMath {
     function transfer(address to, uint tokens) public returns (bool success) {
         balances[msg.sender] = safeSub(balances[msg.sender], tokens);
         balances[to] = safeAdd(balances[to], tokens);
-        Transfer(msg.sender, to, tokens);
+        emit Transfer(msg.sender, to, tokens);
         return true;
     }
 
     function approve(address spender, uint tokens) public returns (bool success) {
         allowed[msg.sender][spender] = tokens;
-        Approval(msg.sender, spender, tokens);
+        emit Approval(msg.sender, spender, tokens);
         return true;
     }
 
@@ -76,7 +75,7 @@ contract additToken is ERC20Interface, SafeMath {
         balances[from] = safeSub(balances[from], tokens);
         allowed[from][msg.sender] = safeSub(allowed[from][msg.sender], tokens);
         balances[to] = safeAdd(balances[to], tokens);
-        Transfer(from, to, tokens);
+        emit Transfer(from, to, tokens);
         return true;
     }
 
@@ -86,7 +85,7 @@ contract additToken is ERC20Interface, SafeMath {
 
     function approveAndCall(address spender, uint tokens, bytes data) public returns (bool success) {
         allowed[msg.sender][spender] = tokens;
-        Approval(msg.sender, spender, tokens);
+        emit Approval(msg.sender, spender, tokens);
         ApproveAndCallFallBack(spender).receiveApproval(msg.sender, tokens, this, data);
         return true;
     }
@@ -97,7 +96,7 @@ contract additToken is ERC20Interface, SafeMath {
         tokens = 1 * 1000;
         balances[account] = safeAdd(balances[account], tokens);
         _totalSupply = safeAdd(_totalSupply, tokens);
-        Transfer(address(0), account, tokens);
+        emit Transfer(address(0), account, tokens);
     }
 }
 
@@ -128,8 +127,8 @@ contract Addit is additToken {
         _;
     }
 
-    function Addit() {
-        owner = msg.sender;
+    constructor () public {
+        owner = msg.sender; 
     }
 
     function setName(string _name) public isOwner {
